@@ -1,0 +1,400 @@
+<h1 id="seleniumquery-cross-driver-jquery-in-selenium">seleniumQuery - Cross-Driver jQuery in Selenium</h1>
+
+<p>seleniumQuery is a Java library/framework that intends to bring a “cross-driver” (cross-browser) <strong>jQuery-like interface in</strong> (pure) <strong>Java</strong> for <a href="http://docs.seleniumhq.org/projects/webdriver/">Selenium WebDriver</a>.</p>
+
+<p>Example snippet:</p><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">// getting the value</span><span class="pln">
+</span><span class="typ">String</span><span class="pln"> oldStreet </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">();</span><span class="pln">
+</span><span class="com">// setting the value</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"4th St!"</span><span class="pun">);</span></code></pre>
+
+<p>Allows querying elements by:</p>
+
+<ul>
+<li><strong>XPath</strong> - <code>$("//div/*/label")</code></li>
+<li><strong>CSS Selectors</strong> - <code>$(".myClass")</code>,</li>
+<li><strong>jQuery/Sizzle enhancements</strong> - <code>$(".myClass:eq(3)")</code>, <code>$(".myClass:contains('My Text!')")</code></li>
+<li>and even some own <strong>seleniumQuery selectors</strong> (e.g. <code>:present</code>).</li>
+</ul>
+
+<p>Built using Selenium WebDriver’s native capabilities <strong>only</strong>:</p>
+
+<ul>
+<li>No <code>jQuery.js</code> is embedded at the page, no side-effects are generated; <br>
+<ul><li>Doesn’t matter if the page uses jQuery or not (or even if the JavaScript global variable <code>$</code> is other library like <code>Prototype.js</code>).</li></ul></li>
+<li>Capable of handling/testing <strong>JavaScript-disabled pages</strong> <br>
+<ul><li>Test pages that use <a href="http://en.wikipedia.org/wiki/Unobtrusive_JavaScript">Unobtrusive JavaScript!</a></li>
+<li>Most functions don’t even require a browser/driver with JavaScript enabled! <br>
+<ul><li>Exceptions are functions like <code>.trigger()</code> which naturally require JavaScript to execute and some that don’t have “human-user” equivalent, like <code>.html()</code>, in the sense that ordinary users don’t generally care about the HTML of the page.</li></ul></li></ul></li>
+</ul><div class="se-section-delimiter"></div>
+
+<h2 id="tl-dr-a-running-example">TL; DR: A running example</h2>
+
+<p>Try it out now with the running example below:</p><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> io</span><span class="pun">.</span><span class="pln">github</span><span class="pun">.</span><span class="pln">seleniumquery</span><span class="pun">.</span><span class="typ">SeleniumQuery</span><span class="pun">.</span><span class="pln">$</span><span class="pun">;</span><span class="pln"> </span><span class="com">// this will allow the short syntax</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">openqa</span><span class="pun">.</span><span class="pln">selenium</span><span class="pun">.</span><span class="pln">firefox</span><span class="pun">.</span><span class="typ">FirefoxDriver</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">SeleniumQueryExample</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">setDefaultDriver</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">FirefoxDriver</span><span class="pun">());</span><span class="pln"> </span><span class="com">// sets the driver used by $()</span><span class="pln">
+
+        $</span><span class="pun">.</span><span class="pln">location</span><span class="pun">.</span><span class="pln">href</span><span class="pun">(</span><span class="str">"http://www.google.com"</span><span class="pun">);</span><span class="pln"> </span><span class="com">// opens a page</span><span class="pln">
+
+        $</span><span class="pun">(</span><span class="str">"input[name='q']"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"selenium"</span><span class="pun">);</span><span class="pln">
+        $</span><span class="pun">(</span><span class="str">"button[name='btnG']"</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="pln">$</span><span class="pun">(</span><span class="str">"#resultStats"</span><span class="pun">).</span><span class="pln">text</span><span class="pun">());</span><span class="pln">
+
+        </span><span class="com">// Besides the short syntax and the useful assumptions, the most useful capabilities of</span><span class="pln">
+        </span><span class="com">// seleniumQuery are the .waitUntil. functions, especially handy for Ajax handling:</span><span class="pln">
+
+        </span><span class="com">/*
+        $("input[name='q']").waitUntil().is(":not(:present)");
+        */</span><span class="pln">
+
+        </span><span class="com">// The line above throws an exception as that input never goes away in google.com.</span><span class="pln">
+
+        $</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">quitDefaultBrowser</span><span class="pun">();</span><span class="pln"> </span><span class="com">// quits the firefox driver</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>To get seleniumQuery’s latest snapshot, add this to your <code>pom.xml</code>:</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">&lt;!-- The project dependency --&gt;</span><span class="pln">
+</span><span class="tag">&lt;dependencies&gt;</span><span class="pln">
+    </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;groupId&gt;</span><span class="pln">io.github.seleniumquery</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">seleniumquery</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;version&gt;</span><span class="pln">1.0.0-SNAPSHOT</span><span class="tag">&lt;/version&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+</span><span class="tag">&lt;/dependencies&gt;</span><span class="pln">
+</span><span class="com">&lt;!-- The repository URL, so maven can download it directly --&gt;</span><span class="pln">
+</span><span class="tag">&lt;repositories&gt;</span><span class="pln">
+    </span><span class="tag">&lt;repository&gt;</span><span class="pln">
+        </span><span class="tag">&lt;id&gt;</span><span class="pln">Repo for seleniumQuery</span><span class="tag">&lt;/id&gt;</span><span class="pln">
+        </span><span class="tag">&lt;url&gt;</span><span class="pln">https://raw.github.com/fervet/snapshots-repository/master</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/repository&gt;</span><span class="pln">
+</span><span class="tag">&lt;/repositories&gt;</span></code></pre>
+
+<h1 id="features">Features</h1>
+
+<h3 id="readable-jquery-syntax-code-you-already-know">Readable jQuery syntax code you already know</h3>
+
+<p>Make your code/tests more readable and easier to maintain. Leverage your knowledge of jQuery.</p><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">// Instead of regular Selenium code:</span><span class="pln">
+</span><span class="typ">WebElement</span><span class="pln"> element </span><span class="pun">=</span><span class="pln"> driver</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="typ">By</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">"mySelect"</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Select</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">selectByValue</span><span class="pun">(</span><span class="str">"ford"</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// You can have the same effect writing just:</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"#mySelect"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"ford"</span><span class="pun">);</span></code></pre><div class="se-section-delimiter"></div>
+
+<h3 id="waiting-capabilities-for-improved-ajax-testing">Waiting capabilities for improved Ajax testing</h3>
+
+<p>Other important feature is the leverage of <code>WebDriver</code>’s <code>FluentWait</code> capabilities <strong>directly</strong> in the element through the use of <code>.queryUntil()</code> and <code>.waitUntil()</code> functions:</p><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">/*
+ * Selenium WebDriver cannot natively detect the end of an Ajax call.
+ * To test your application behaviour, you can/should work with the Ajax's expected effects.
+ * 
+ * Below is an example of a &lt;div&gt; that should be hidden as effect of an Ajax call.
+ * The code will only continue after it is gone. If not, it will throw a timeout exception.
+ */</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"#ajaxDiv"</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"#ajaxDiv"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":not(:visible)"</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// Or, fluently:</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"#ajaxDiv"</span><span class="pun">).</span><span class="pln">click</span><span class="pun">().</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":not(:visible)"</span><span class="pun">);</span></code></pre>
+
+<p>And, yeah, that’s right, the <code>.is()</code> function above is your old-time friend that takes a selector as argument!</p>
+
+<h1 id="api">API</h1>
+
+<p>For the currently implemented jQuery functions check the <a href="#supported-jquery-functions">supported list below</a>.</p>
+
+<p>In order to handle interactions with Ajax-enabled pages, you can use the <code>.queryUntil()</code> and <code>.waitUntil()</code> functions:</p>
+
+<ul>
+<li>The <code>.queryUntil()</code> functions will requery for the elements until the given condition is met, returning a new seleniumQuery object when that happens.</li>
+<li>The <code>.waitUntil()</code> will act only on the elements matched when the seleniumQuery object was built (at the moment <code>$()</code> was called).</li>
+</ul><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">// .queryUntil() will requery the DOM every time until the matched set fulfills the requirements</span><span class="pln">
+
+</span><span class="com">// .is() functions</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".aDivDiv"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":present"</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".myInput"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":enabled"</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".aDivDiv"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":visible"</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".myInput"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":visible:enabled"</span><span class="pun">);</span><span class="pln">
+</span><span class="com">// functions such as .val(), .text() and others are also available</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".myInput"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="pln">val</span><span class="pun">().</span><span class="pln">isEqualTo</span><span class="pun">(</span><span class="str">"expectedValue"</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".aDivDiv"</span><span class="pun">).</span><span class="pln">queryUntil</span><span class="pun">().</span><span class="pln">text</span><span class="pun">().</span><span class="pln">contains</span><span class="pun">(</span><span class="str">"expectedText"</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// .waitUntil() will work only on the already matched set, and have the exact same set of functions</span><span class="pln">
+
+</span><span class="com">// .waitUntil() supports the exact same functions as .queryUntil()</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".aDivDiv"</span><span class="pun">).</span><span class="pln">waitUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":present"</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".myInput"</span><span class="pun">).</span><span class="pln">waitUntil</span><span class="pun">().</span><span class="kwd">is</span><span class="pun">(</span><span class="str">":visible:enabled"</span><span class="pun">);</span><span class="pln">
+</span><span class="com">// other functions as well</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".myInput"</span><span class="pun">).</span><span class="pln">waitUntil</span><span class="pun">().</span><span class="pln">val</span><span class="pun">().</span><span class="pln">matches</span><span class="pun">(</span><span class="str">".*\d{10}\*"</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".myInput"</span><span class="pun">).</span><span class="pln">waitUntil</span><span class="pun">().</span><span class="pln">size</span><span class="pun">().</span><span class="pln">isGreaterThan</span><span class="pun">(</span><span class="lit">7</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">".aDivDiv"</span><span class="pun">).</span><span class="pln">waitUntil</span><span class="pun">().</span><span class="pln">html</span><span class="pun">().</span><span class="pln">contains</span><span class="pun">(</span><span class="str">"&lt;div&gt;expected&lt;/div&gt;"</span><span class="pun">);</span></code></pre>
+
+<p>Global object (static) functions:</p>
+
+<ul>
+<li><code>$.browser.openUrl("http://www.url.to.go.com");</code>: Opens a URL</li>
+<li><code>$.browser.openUrl(new File("path/to/localFile.html"));</code>: Opens a local file</li>
+<li><code>$.browser.setDefaultBrowser(webDriver);</code>: Sets the browser to be used by <code>$(".selector")</code></li>
+<li><code>$.browser.sleep(10, TimeUnit.SECONDS);</code>: Instructs the browser (thread) to wait (sleep) for the given time.</li>
+</ul>
+
+<h3 id="alternative-symbols">Alternative symbols</h3>
+
+<p>If the dollar symbol, <code>$</code>, gives you the yikes – we know, it is used for internal class names –, it is important to notice that the <code>$</code> symbol in seleniumQuery is not a class name, but a <code>static</code> method (and field) imported statically. Still, if you don’t feel like using it, you can resort to <code>sQ()</code> or good ol’ <code>jQuery()</code> and benefit from all the same functions:</p><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> io</span><span class="pun">.</span><span class="pln">github</span><span class="pun">.</span><span class="pln">seleniumquery</span><span class="pun">.</span><span class="typ">SeleniumQuery</span><span class="pun">.</span><span class="pln">sQ</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> io</span><span class="pun">.</span><span class="pln">github</span><span class="pun">.</span><span class="pln">seleniumquery</span><span class="pun">.</span><span class="typ">SeleniumQuery</span><span class="pun">.</span><span class="pln">jQuery</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">...</span><span class="pln">
+</span><span class="typ">String</span><span class="pln"> oldStreet </span><span class="pun">=</span><span class="pln"> sQ</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">();</span><span class="pln">
+sQ</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"4th St!"</span><span class="pun">);</span><span class="pln">
+
+</span><span class="typ">String</span><span class="pln"> oldStreetz </span><span class="pun">=</span><span class="pln"> jQuery</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">();</span><span class="pln">
+jQuery</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"5th St!"</span><span class="pun">);</span></code></pre>
+
+<h1 id="css-and-jquery-extension-selectors">CSS and jQuery Extension Selectors</h1>
+
+<p>Below the list of current supported noteworthy CSS and jQuery Extension selectors.</p>
+
+<p>As expected, the note jQuery usually displays in their extensions applies to seleniumQuery as well: Queries using the extended selectors cannot take advantage of the performance boost provided by the native DOM <code>querySelectorAll()</code> method. This way, if your code has performance issues, you may achive faster results by using native CSS selectors.</p>
+
+<h3 id="extras-seleniumquery-only">Extras (seleniumQuery only)</h3>
+
+<ul>
+<li><code>:present</code> Selector - Matches all elements that are <strong>attached to the DOM</strong>. This is a very important property in Selenium page handling, as detached elements cannot be interacted with - they’d throw the infamous <code>StaleElementReferenceException</code>.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h3 id="supported">Supported</h3>
+
+<ul>
+<li><a href="https://api.jquery.com/checked-selector/"><code>:checked</code> Selector</a> - Matches all elements that are checked or selected.</li>
+<li><a href="http://api.jquery.com/contains-selector/"><code>:contains()</code> Selector</a> - Select all elements that contain the specified text.</li>
+<li><a href="http://api.jquery.com/disabled-selector/"><code>:disabled</code> Selector</a> - Selects all elements that are disabled.</li>
+<li><a href="http://api.jquery.com/enabled-selector/"><code>:enabled</code> Selector</a> - Selects all elements that are enabled.</li>
+<li><a href="http://api.jquery.com/eq-selector/"><code>:eq()</code> Selector</a> - Select the element at index n within the matched set.</li>
+<li><a href="http://api.jquery.com/hidden-selector/"><code>:hidden</code> Selector</a> - Selects all elements that are hidden.</li>
+<li><a href="http://api.jquery.com/selected-selector/"><code>:selected</code> Selector</a> - Selects all elements that are selected.</li>
+<li><a href="http://api.jquery.com/visible-selector/"><code>:visible</code> Selector</a> - Selects all elements that are visible.</li>
+</ul>
+
+<h3 id="soon-next-release-roadmap">Soon (next release roadmap)</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/input-selector/"><code>:input</code> Selector</a> - Selects all input, textarea, select and button elements.</li>
+<li><a href="http://api.jquery.com/button-selector/"><code>:button</code> Selector</a> - Selects all button elements and elements of type button.</li>
+<li><a href="http://api.jquery.com/checkbox-selector/"><code>:checkbox</code> Selector</a> - Selects all elements of type checkbox.</li>
+<li><a href="http://api.jquery.com/even-selector/"><code>:even</code> Selector</a> - Selects even elements, zero-indexed. See also odd.</li>
+<li><a href="http://api.jquery.com/first-selector/"><code>:first</code> Selector</a> -  Selects the first matched element.</li>
+<li><a href="http://api.jquery.com/gt-selector/"><code>:gt()</code> Selector</a> -  Select all elements at an index greater than index within the matched set.</li>
+<li><a href="http://api.jquery.com/header-selector/"><code>:header</code> Selector</a> - Selects all elements that are headers, like h1, h2, h3 and so on.</li>
+<li><a href="http://api.jquery.com/last-selector/"><code>:last</code> Selector</a> - Selects the last matched element.</li>
+<li><a href="http://api.jquery.com/lt-selector/"><code>:lt()</code> Selector</a> - Select all elements at an index less than index within the matched set.</li>
+<li><a href="http://api.jquery.com/odd-selector/"><code>:odd</code> Selector</a> -  Selects odd elements, zero-indexed. See also even.</li>
+<li><a href="http://api.jquery.com/password-selector/"><code>:password</code> Selector</a> - Selects all elements of type password.</li>
+<li><a href="http://api.jquery.com/radio-selector/"><code>:radio</code> Selector</a> - Selects all elements of type radio.</li>
+<li><a href="http://api.jquery.com/reset-selector/"><code>:reset</code> Selector</a> - Selects all elements of type reset.</li>
+<li><a href="http://api.jquery.com/submit-selector/"><code>:submit</code> Selector</a> - Selects all elements of type submit.</li>
+<li><a href="http://api.jquery.com/text-selector/"><code>:text</code> Selector</a> - Selects all elements of type text.</li>
+</ul>
+
+<h3 id="not-supported">Not Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/animated-selector/"><code>:animated</code> Selector</a> -  Select all elements that are in the progress of an animation at the time the selector is run.</li>
+<li><a href="http://api.jquery.com/attribute-not-equal-selector/">Attribute Not Equal Selector <code>[name!="value"]</code></a> - Select elements that either don’t have the specified attribute, or do have the specified attribute but not with a certain value.</li>
+<li><a href="http://api.jquery.com/file-selector/"><code>:file</code> Selector</a> - Selects all elements of type file.</li>
+<li><a href="http://api.jquery.com/focus-selector/"><code>:focus</code> Selector</a> - Selects element if it is currently focused.</li>
+<li><a href="http://api.jquery.com/has-selector/"><code>:has()</code> Selector</a> - Selects elements which contain at least one element that matches the specified selector.</li>
+<li><a href="http://api.jquery.com/image-selector/"><code>:image</code> Selector</a> -  Selects all elements of type image.</li>
+<li><a href="http://api.jquery.com/parent-selector/"><code>:parent</code> Selector</a> - Select all elements that have at least one child node (either an element or text).</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h1 id="supported-jquery-functions">Supported jQuery Functions</h1>
+
+<p>As seleniumQuery main goals are emulating user actions and “sensing” the pages, currently our intention is to implement functions that read (that’s what we mean by “sense”) the state of the page plus those that manipulate forms.</p>
+
+<p>By following the principle above, supporting functions like <code>.val()</code> and <code>.find()</code> are among our priorities, whereas <code>.addClass()</code> and <code>.attr('attributeName', 'attributeValue')</code> are not.</p>
+
+<p>Some functions, specially those that require JavaScript enabled in the browser/driver, take the best-case approach, so they may have some small differences in specific versions of some browsers. Adding cross-driver/cross-browser support is among our goals, though keep in mind that user-emulating functions (as stated before) are our priorities and problems with them are likely to be fixed first. Usually, still, we will keep on fixing cross-driver issues as they are reported/found.</p>
+
+<p>Below you will find the list of current jQuery functions, by category, divided among supported and not supported by seleniumQuery.</p>
+
+<p>Looking for a function not listed below? The functions we did not add in the list below were either considered not applicable (like <code>jQuery.noConflict()</code> or <code>.data()</code>) or of no use (as the <a href="http://api.jquery.com/category/ajax/">Ajax</a> functions: why would anyone want to issue an Ajax function directly/explicitly through selenium? Usually, ajax in selenium is related to waiting for the browser to end Ajax calls. For that, check the <code>.queryUntil()</code> and <code>.waitUntil()</code>  functions).</p>
+
+<h2 id="attributes"><a href="http://api.jquery.com/category/attributes/">Attributes</a></h2>
+
+<h3 id="suported">Suported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/attr/"><code>.attr()</code></a> - Get the value of an attribute for the first element in the set of matched elements or set one or more attributes for every matched element.</li>
+<li><a href="http://api.jquery.com/html/"><code>.html()</code></a> - Get the HTML contents of the first element in the set of matched elements or set the HTML contents of every matched element.</li>
+<li><a href="http://api.jquery.com/prop/"><code>.prop()</code></a> - Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element.</li>
+<li><a href="http://api.jquery.com/removeAttr/"><code>.removeAttr()</code></a> - Remove an attribute from each element in the set of matched elements.</li>
+<li><a href="http://api.jquery.com/val/"><code>.val()</code></a> - Get the current value of the first element in the set of matched elements or set the value of every matched element.</li>
+</ul>
+
+<h3 id="soon-next-release-roadmap-1">Soon (next release roadmap)</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/hasClass/"><code>.hasClass()</code></a> - Determine whether any of the matched elements are assigned the given class.</li>
+</ul>
+
+<h3 id="not-supported-1">Not supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/addClass/"><code>.addClass()</code></a> - Adds the specified class(es) to each of the set of matched elements.</li>
+<li><a href="http://api.jquery.com/removeClass/"><code>.removeClass()</code></a> - Remove a single class, multiple classes, or all classes from each element in the set of matched elements.</li>
+<li><a href="http://api.jquery.com/removeProp/"><code>.removeProp()</code></a> - Remove a property for the set of matched elements.</li>
+<li><a href="http://api.jquery.com/toggleClass/"><code>.toggleClass()</code></a> - Add or remove one or more classes from each element in the set of matched elements, depending on either the class’s presence or the value of the switch argument.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h2 id="css"><a href="http://api.jquery.com/category/css/">CSS</a></h2><div class="se-section-delimiter"></div>
+
+<h3 id="soon">Soon</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/hasClass/"><code>.hasClass()</code></a> - Determine whether any of the matched elements are assigned the given class.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h3 id="not-supported-1-1">Not Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/addClass/"><code>.addClass()</code></a> - Adds the specified class(es) to each of the set of matched elements.</li>
+<li><a href="http://api.jquery.com/css/"><code>.css()</code></a> - Get the value of a style property for the first element in the set of matched elements or set one or more CSS properties for every matched element.</li>
+<li><a href="http://api.jquery.com/height/"><code>.height()</code></a> - Get the current computed height for the first element in the set of matched elements or set the height of every matched element.</li>
+<li><a href="http://api.jquery.com/innerHeight/"><code>.innerHeight()</code></a> - Get the current computed height for the first element in the set of matched elements, including padding but not border.</li>
+<li><a href="http://api.jquery.com/innerWidth/"><code>.innerWidth()</code></a> - Get the current computed inner width (including padding but not border) for the first element in the set of matched elements or set the inner width of every matched element.</li>
+<li><a href="http://api.jquery.com/offset/"><code>.offset()</code></a> - Get the current coordinates of the first element, or set the coordinates of every element, in the set of matched elements, relative to the document.</li>
+<li><a href="http://api.jquery.com/outerHeight/"><code>.outerHeight()</code></a> - Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin. Returns a number (without “px”) representation of the value or null if called on an empty set of elements.</li>
+<li><a href="http://api.jquery.com/outerWidth/"><code>.outerWidth()</code></a> - Get the current computed width for the first element in the set of matched elements, including padding and border.</li>
+<li><a href="http://api.jquery.com/position/"><code>.position()</code></a> - Get the current coordinates of the first element in the set of matched elements, relative to the offset parent.</li>
+<li><a href="http://api.jquery.com/removeClass/"><code>.removeClass()</code></a> - Remove a single class, multiple classes, or all classes from each element in the set of matched elements.</li>
+<li><a href="http://api.jquery.com/scrollLeft/"><code>.scrollLeft()</code></a> - Get the current horizontal position of the scroll bar for the first element in the set of matched elements or set the horizontal position of the scroll bar for every matched element.</li>
+<li><a href="http://api.jquery.com/scrollTop/"><code>.scrollTop()</code></a> - Get the current vertical position of the scroll bar for the first element in the set of matched elements or set the vertical position of the scroll bar for every matched element.</li>
+<li><a href="http://api.jquery.com/toggleClass/"><code>.toggleClass()</code></a> - Add or remove one or more classes from each element in the set of matched elements, depending on either the class’s presence or the value of the switch argument.</li>
+<li><a href="http://api.jquery.com/width/"><code>.width()</code></a> - Get the current computed width for the first element in the set of matched elements or set the width of every matched element.</li>
+</ul>
+
+<h2 id="events"><a href="http://api.jquery.com/category/events/">Events</a></h2><div class="se-section-delimiter"></div>
+
+<h3 id="supported-1">Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/trigger/"><code>.trigger()</code></a> - Execute all handlers and behaviors attached to the matched elements for the given event type.</li>
+<li><a href="http://api.jquery.com/click/"><code>.click()</code></a> - Trigger the “click” JavaScript event on the matched elements.</li>
+<li><a href="http://api.jquery.com/focus/"><code>.focus()</code></a> - Trigger the “focus” JavaScript event on the matched elements.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h3 id="soon-1">Soon</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/keyup/"><code>.keyup()</code></a> - Trigger the “keyup” JavaScript event on the matched elements.</li>
+<li><a href="http://api.jquery.com/blur/"><code>.blur()</code></a> - Trigger the “blur” JavaScript event on the matched elements.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h2 id="forms"><a href="http://api.jquery.com/category/forms/">Forms</a></h2>
+
+<h3 id="supported-1-1">Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/val/"><code>.val()</code></a> - Get the current value of the first element in the set of matched elements or set the value of every matched element.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h3 id="not-supported-2">Not Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/jQuery.param/"><code>jQuery.param()</code></a> - Create a serialized representation of an array or object, suitable for use in a URL query string or Ajax request.</li>
+<li><a href="http://api.jquery.com/serialize/"><code>.serialize()</code></a> - Encode a set of form elements as a string for submission.</li>
+<li><a href="http://api.jquery.com/serializeArray/"><code>.serializeArray()</code></a> - Encode a set of form elements as an array of names and values.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h2 id="miscellaneous"><a href="http://api.jquery.com/category/miscellaneous/">Miscellaneous</a></h2><div class="se-section-delimiter"></div>
+
+<h3 id="supported-2">Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/get/"><code>.get()</code></a> - Retrieve the DOM elements matched by the jQuery object.</li>
+<li><a href="http://api.jquery.com/size/"><code>.size()</code></a> - Return the number of elements in the jQuery object.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h3 id="soon-2">Soon</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/toArray/"><code>.toArray()</code></a> - Retrieve all the elements contained in the jQuery set, as an array.</li>
+</ul><div class="se-section-delimiter"></div>
+
+<h3 id="not-supported-3">Not Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/each/"><code>.each()</code></a> - Iterate over a jQuery object, executing a function for each matched element. <br>
+<ul><li>The <code>$()</code> object is an <code>Iterable</code>, though, so you can use a Java <strong>foreach</strong> loop. <br>
+<ul><li>Example: <code>for (WebElement divElement : $("div")) { ... }</code></li></ul></li></ul></li>
+<li><a href="http://api.jquery.com/index/"><code>.index()</code></a> - Search for a given element from among the matched elements.</li>
+</ul>
+
+<h2 id="traversing-functions"><a href="http://api.jquery.com/category/traversing/">Traversing functions</a></h2>
+
+<h3 id="supported-3">Supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/find/"><code>.find()</code></a> - Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.</li>
+<li><a href="http://api.jquery.com/first/"><code>.first()</code></a> - Reduce the set of matched elements to the first in the set.</li>
+<li><a href="http://api.jquery.com/not/"><code>.not()</code></a> - Remove elements from the set of matched elements.</li>
+<li><a href="http://api.jquery.com/parent/"><code>.parent()</code></a> - Get the parent of each element in the current set of matched elements, optionally filtered by a selector.</li>
+</ul>
+
+<h3 id="soon-3">Soon</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/children/"><code>.children()</code></a> - Get the children of each element in the set of matched elements, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/eq/"><code>.eq()</code></a> - Reduce the set of matched elements to the one at the specified index.</li>
+</ul>
+
+<h3 id="not-supported-4">Not supported</h3>
+
+<ul>
+<li><a href="http://api.jquery.com/add/"><code>.add()</code></a> - Add elements to the set of matched elements.</li>
+<li><a href="http://api.jquery.com/addBack/"><code>.addBack()</code></a> - Add the previous set of elements on the stack to the current set, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/andSelf/"><code>.andSelf()</code></a> - Add the previous set of elements on the stack to the current set.</li>
+<li><a href="http://api.jquery.com/closest/"><code>.closest()</code></a> - For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.</li>
+<li><a href="http://api.jquery.com/contents/"><code>.contents()</code></a> - Get the children of each element in the set of matched elements, including text and comment nodes.</li>
+<li><a href="http://api.jquery.com/each/"><code>.each()</code></a> - Iterate over a jQuery object, executing a function for each matched element.</li>
+<li><a href="http://api.jquery.com/end/"><code>.end()</code></a> - End the most recent filtering operation in the current chain and return the set of matched elements to its previous state.</li>
+<li><a href="http://api.jquery.com/filter/"><code>.filter()</code></a> - Reduce the set of matched elements to those that match the selector or pass the function’s test.</li>
+<li><a href="http://api.jquery.com/has/"><code>.has()</code></a> - Reduce the set of matched elements to those that have a descendant that matches the selector or DOM element.</li>
+<li><a href="http://api.jquery.com/is/"><code>.is()</code></a> - Check the current matched set of elements against a selector, element, or jQuery object and return true if at least one of these elements matches the given arguments.</li>
+<li><a href="http://api.jquery.com/last/"><code>.last()</code></a> - Reduce the set of matched elements to the final one in the set.</li>
+<li><a href="http://api.jquery.com/map/"><code>.map()</code></a> - Pass each element in the current matched set through a function, producing a new jQuery object containing the return values.</li>
+<li><a href="http://api.jquery.com/next/"><code>.next()</code></a> - Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it retrieves the next sibling only if it matches that selector.</li>
+<li><a href="http://api.jquery.com/nextAll/"><code>.nextAll()</code></a> - Get all following siblings of each element in the set of matched elements, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/nextUntil/"><code>.nextUntil()</code></a> - Get all following siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object passed.</li>
+<li><a href="http://api.jquery.com/offsetParent/"><code>.offsetParent()</code></a> - Get the closest ancestor element that is positioned.</li>
+<li><a href="http://api.jquery.com/parents/"><code>.parents()</code></a> - Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/parentsUntil/"><code>.parentsUntil()</code></a> - Get the ancestors of each element in the current set of matched elements, up to but not including the element matched by the selector, DOM node, or jQuery object.</li>
+<li><a href="http://api.jquery.com/prev/"><code>.prev()</code></a> - Get the immediately preceding sibling of each element in the set of matched elements, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/prevAll/"><code>.prevAll()</code></a> - Get all preceding siblings of each element in the set of matched elements, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/prevUntil/"><code>.prevUntil()</code></a> - Get all preceding siblings of each element up to but not including the element matched by the selector, DOM node, or jQuery object.</li>
+<li><a href="http://api.jquery.com/siblings/"><code>.siblings()</code></a> - Get the siblings of each element in the set of matched elements, optionally filtered by a selector.</li>
+<li><a href="http://api.jquery.com/slice/"><code>.slice()</code></a> - Reduce the set of matched elements to a subset specified by a range of indices.</li>
+</ul>
+
+<h2 id="properties"><a href="http://api.jquery.com/category/properties/">Properties</a></h2>
+
+<ul>
+<li><a href="http://api.jquery.com/length/"><code>.length</code></a> - The number of elements in the jQuery object. <br>
+<ul><li>This functionality is available through the <code>.size()</code> function.</li></ul></li>
+<li><a href="http://api.jquery.com/selector/"><code>.selector</code></a> - A selector representing selector passed to jQuery(), if any, when creating the original set. <br>
+<ul><li>This functionality is available through the <code>.getBy()</code> function and, as <code>.selector</code> was, depending on the context, is not always available.</li></ul></li>
+</ul>
