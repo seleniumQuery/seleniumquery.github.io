@@ -46,7 +46,7 @@ $</span><span class="pun">(</span><span class="str">"input.street"</span><span c
 <li><strong>XPath</strong> - <code>$("//div/*/label")</code></li>
 <li><strong>CSS Selectors</strong> - <code>$(".myClass")</code>,</li>
 <li><strong>jQuery/Sizzle enhancements</strong> - <code>$(".myClass:eq(3)")</code>, <code>$(".myClass:contains('My Text!')")</code></li>
-<li>and even some own <strong>seleniumQuery selectors</strong> (e.g. <code>:present</code>).</li>
+<li>and even some own <strong>seleniumQuery selectors</strong> - <code>$("#myOldDiv").is(":not(:present)")</code></li>
 </ul>
 
 <p>Built using Selenium WebDriver’s native capabilities <strong>only</strong>:</p>
@@ -78,11 +78,12 @@ $</span><span class="pun">(</span><span class="str">"input.street"</span><span c
         $</span><span class="pun">(</span><span class="str">"button[name='btnG']"</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
         </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="pln">$</span><span class="pun">(</span><span class="str">"#resultStats"</span><span class="pun">).</span><span class="pln">text</span><span class="pun">());</span><span class="pln">
 
-        </span><span class="com">// Besides the short syntax and the useful assumptions, the most useful capabilities of</span><span class="pln">
-        </span><span class="com">// seleniumQuery are the .waitUntil. functions, especially handy for Ajax handling:</span><span class="pln">
+        </span><span class="com">// Besides the short syntax and the useful assumptions, other very useful capabilities of</span><span class="pln">
+        </span><span class="com">// seleniumQuery are the .queryUntil() and .waitUntil() functions, especially handy for</span><span class="pln">
+        </span><span class="com">// handling/testing Ajax enabled pages:</span><span class="pln">
 
         </span><span class="com">/*
-        $("input[name='q']").waitUntil().is(":not(:present)");
+        $("input[name='q']").queryUntil().is(":not(:present)");
         */</span><span class="pln">
 
         </span><span class="com">// The line above throws an exception as that input never goes away in google.com.</span><span class="pln">
