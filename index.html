@@ -72,7 +72,7 @@ $</span><span class="pun">(</span><span class="str">"input.street"</span><span c
     </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
         $</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">setDefaultDriver</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">FirefoxDriver</span><span class="pun">());</span><span class="pln"> </span><span class="com">// sets the driver used by $()</span><span class="pln">
 
-        $</span><span class="pun">.</span><span class="pln">location</span><span class="pun">.</span><span class="pln">href</span><span class="pun">(</span><span class="str">"http://www.google.com"</span><span class="pun">);</span><span class="pln"> </span><span class="com">// opens a page</span><span class="pln">
+        $</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">openUrl</span><span class="pun">(</span><span class="str">"http://www.google.com"</span><span class="pun">);</span><span class="pln"> </span><span class="com">// opens a page</span><span class="pln">
 
         $</span><span class="pun">(</span><span class="str">"input[name='q']"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"selenium"</span><span class="pun">);</span><span class="pln">
         $</span><span class="pun">(</span><span class="str">"button[name='btnG']"</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
@@ -105,7 +105,11 @@ $</span><span class="pun">(</span><span class="str">"input.street"</span><span c
 </span><span class="tag">&lt;repositories&gt;</span><span class="pln">
     </span><span class="tag">&lt;repository&gt;</span><span class="pln">
         </span><span class="tag">&lt;id&gt;</span><span class="pln">Repo for seleniumQuery</span><span class="tag">&lt;/id&gt;</span><span class="pln">
-        </span><span class="tag">&lt;url&gt;</span><span class="pln">https://raw.github.com/seleniumquery/snapshots-repository/master</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+        </span><span class="tag">&lt;url&gt;</span><span class="pln">https://raw.githubusercontent.com/seleniumquery/snapshots-repository/master</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+		</span><span class="tag">&lt;snapshots&gt;</span><span class="pln">
+			</span><span class="tag">&lt;enabled&gt;</span><span class="pln">true</span><span class="tag">&lt;/enabled&gt;</span><span class="pln">
+			</span><span class="tag">&lt;updatePolicy&gt;</span><span class="pln">always</span><span class="tag">&lt;/updatePolicy&gt;</span><span class="pln">
+		</span><span class="tag">&lt;/snapshots&gt;</span><span class="pln">
     </span><span class="tag">&lt;/repository&gt;</span><span class="pln">
 </span><span class="tag">&lt;/repositories&gt;</span></code></pre>
 
