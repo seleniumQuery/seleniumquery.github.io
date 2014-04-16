@@ -57,6 +57,7 @@ header {
   -ms-border-radius: 8px 8px 0 0;
   -o-border-radius: 8px 8px 0 0;
   border-radius: 8px 8px 0 0;
+  /*
   background: #C6EAFA;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ddfbfc), color-stop(100%, #c6eafa));
   background: -webkit-linear-gradient(#ddfbfc, #c6eafa);
@@ -64,6 +65,15 @@ header {
   background: -o-linear-gradient(#ddfbfc, #c6eafa);
   background: -ms-linear-gradient(#ddfbfc, #c6eafa);
   background: linear-gradient(#ddfbfc, #c6eafa);
+  */
+  background: #111D72;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #111D72), color-stop(100%, #226583));
+  background: -webkit-linear-gradient(#111D72, #226583);
+  background: -moz-linear-gradient(#111D72, #226583);
+  background: -o-linear-gradient(#111D72, #226583);
+  background: -ms-linear-gradient(#111D72, #226583);
+  background: linear-gradient(#111D72, #226583);
+  
   position: relative;
   padding: 15px 20px;
   border-bottom: 1px solid #B2D2E1;
@@ -82,7 +92,7 @@ header.without-description h1 {
 header p {
   margin: 0;
   color: #61778B;
-  width: 300px;
+  /*width: 300px;*/
   font-size: 13px;
 }
 header p.view {
@@ -178,12 +188,15 @@ section {
   padding: 15px 20px;
   font-size: 15px;
   border-top: 1px solid #fff;
+  /*
   background: -webkit-gradient(linear, 50% 0%, 50% 700, color-stop(0%, #fafafa), color-stop(100%, #dedede));
   background: -webkit-linear-gradient(#fafafa, #dedede 700px);
   background: -moz-linear-gradient(#fafafa, #dedede 700px);
   background: -o-linear-gradient(#fafafa, #dedede 700px);
   background: -ms-linear-gradient(#fafafa, #dedede 700px);
   background: linear-gradient(#fafafa, #dedede 700px);
+  */
+  background: #fafafa;
   -webkit-border-radius: 0 0 8px 8px;
   -moz-border-radius: 0 0 8px 8px;
   -ms-border-radius: 0 0 8px 8px;
