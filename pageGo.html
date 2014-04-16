@@ -1,0 +1,102 @@
+<h1 id="seleniumquery-v050-jquery-in-selenium">seleniumQuery v0.5.0 - jQuery in Selenium</h1>
+
+<p>Java library that allows the use of a <strong>jQuery-like native interface</strong> for <a href="http://docs.seleniumhq.org/projects/webdriver/">Selenium WebDriver</a>.</p>
+
+<p>Example snippet:</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">// getting the value</span><span class="pln">
+</span><span class="typ">String</span><span class="pln"> oldStreet </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">();</span><span class="pln">
+</span><span class="com">// setting the value</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"input.street"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"4th St!"</span><span class="pun">);</span></code></pre>
+
+<p>Allows querying elements by <strong>XPath</strong>, <strong>CSS Selectors</strong> and even some <strong>jQuery/Sizzle enhancements</strong>, such as <code>:eq()</code>, <code>:not()</code> and others!</p>
+
+<p>Built using Selenium WebDriver’s native capabilities <strong>only</strong>: <br>
+- No <code>jQuery.js</code> is embedded at the page, no side-effects are generated; <br>
+- Works predictably and exactly the same with any (including legacy, old JSF) system; <br>
+- Doesn’t matter if the page uses jQuery or not (or even if the JavaScript global variable <code>$</code> is other library like <code>Prototype.js</code>). <br>
+- <strong>Capable of testing JavaScript-disabled pages</strong> <br>
+    - Test pages that use <a href="http://en.wikipedia.org/wiki/Unobtrusive_JavaScript">Unobtrusive JavaScript!</a> <br>
+    - Most functions don’t even require a browser/driver with JavaScript enabled! <br>
+        - (Exceptions are functions like <code>.trigger()</code> which obviously requires JavaScript on the browser.)</p>
+
+<h2 id="tl-dr-running-example">TL; DR: Running Example</h2>
+
+<p>Try it out now with the running example below:</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">openqa</span><span class="pun">.</span><span class="pln">selenium</span><span class="pun">.</span><span class="pln">seleniumquery</span><span class="pun">.</span><span class="typ">SeleniumQuery</span><span class="pun">.</span><span class="pln">$</span><span class="pun">;</span><span class="pln"> </span><span class="com">// this will allow the short syntax</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">openqa</span><span class="pun">.</span><span class="pln">selenium</span><span class="pun">.</span><span class="pln">firefox</span><span class="pun">.</span><span class="typ">FirefoxDriver</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">SeleniumQueryExample</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">setDefaultDriver</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">FirefoxDriver</span><span class="pun">());</span><span class="pln"> </span><span class="com">// sets the driver used by $()</span><span class="pln">
+
+        $</span><span class="pun">.</span><span class="pln">location</span><span class="pun">.</span><span class="pln">href</span><span class="pun">(</span><span class="str">"http://www.google.com"</span><span class="pun">);</span><span class="pln"> </span><span class="com">// opens a page</span><span class="pln">
+
+        $</span><span class="pun">(</span><span class="str">"input[name='q']"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"selenium"</span><span class="pun">);</span><span class="pln">
+        $</span><span class="pun">(</span><span class="str">"button[name='btnG']"</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="kwd">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="pln">$</span><span class="pun">(</span><span class="str">"#resultStats"</span><span class="pun">).</span><span class="pln">text</span><span class="pun">());</span><span class="pln">
+
+        </span><span class="com">// Besides the short syntax and the useful assumptions, the most useful capabilities of</span><span class="pln">
+        </span><span class="com">// seleniumQuery are the .waitUntil. functions, especially handy for Ajax handling:</span><span class="pln">
+
+        </span><span class="com">/*
+        $("input[name='q']").waitUntil().is(":not(:present)");
+        */</span><span class="pln">
+
+        </span><span class="com">// The line above throws an exception as that input never goes away in google.com.</span><span class="pln">
+
+        $</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">quitDefaultBrowser</span><span class="pun">();</span><span class="pln"> </span><span class="com">// quits the firefox driver</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>To get <strong>seleniumQuery</strong>’s latest snapshot, add this to your <strong><code>pom.xml</code></strong>:</p><div class="se-section-delimiter"></div>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">&lt;!-- The project dependency --&gt;</span><span class="pln">
+</span><span class="tag">&lt;dependencies&gt;</span><span class="pln">
+    </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;groupId&gt;</span><span class="pln">com.github.fervet</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">seleniumquery</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;version&gt;</span><span class="pln">0.4.0-RC3</span><span class="tag">&lt;/version&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+</span><span class="tag">&lt;/dependencies&gt;</span><span class="pln">
+</span><span class="com">&lt;!-- The repository URL, so maven can download it directly --&gt;</span><span class="pln">
+</span><span class="tag">&lt;repositories&gt;</span><span class="pln">
+    </span><span class="tag">&lt;repository&gt;</span><span class="pln">
+        </span><span class="tag">&lt;id&gt;</span><span class="pln">Repo for seleniumQuery</span><span class="tag">&lt;/id&gt;</span><span class="pln">
+        </span><span class="tag">&lt;url&gt;</span><span class="pln">https://raw.github.com/fervet/snapshots-repository/master</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/repository&gt;</span><span class="pln">
+</span><span class="tag">&lt;/repositories&gt;</span></code></pre><div class="se-section-delimiter"></div>
+
+<h1 id="features">Features</h1>
+
+<h3 id="more-readable-jquery-like-syntax-code">More readable jQuery-like syntax code</h3>
+
+<p>Make your code/tests more readable and easier to maintain. Leverage your knowledge of jQuery.</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="com">// Instead of regular Selenium code:</span><span class="pln">
+</span><span class="typ">WebElement</span><span class="pln"> element </span><span class="pun">=</span><span class="pln"> driver</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="typ">By</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">"mySelect"</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Select</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">selectByVisibleText</span><span class="pun">(</span><span class="str">"Ford"</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// You can have the same effect writing just:</span><span class="pln">
+$</span><span class="pun">(</span><span class="str">"#mySelect"</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="str">"Ford"</span><span class="pun">);</span></code></pre><div class="se-section-delimiter"></div>
+
+<h3 id="waiting-capabilities-for-improved-ajax-testing">Waiting capabilities for improved Ajax testing</h3>
+
+<p>Other important feature is the leverage of <code>WebDriver</code>’s <code>FluentWait</code> capabilities <strong>directly</strong> in the element through the use of <code>.waitUntil()</code> and <code>.queryUntil()</code>:</p>
+
+<p>“` <br>
+/* <br>
+ * Selenium WebDriver cannot natively detect the end of an Ajax call. <br>
+ * To test your application behaviour, you can/should work with the Ajax’s expected effects. <br>
+ *  <br>
+ * Below is an example of a </p><div> that should be hidden as effect of an Ajax call. <br>
+ * The code will only continue after it is gone. If not, it will throw a timeout exception. <br>
+ */ <br>
+<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-78-Frame" role="textbox" aria-readonly="true"><span class="math" id="MathJax-Span-3781"><span class="noError" id="MathJax-Span-3782" style="display: inline-block;">("#ajaxDiv").click();</span></span></span><script type="math/tex" id="MathJax-Element-78">("#ajaxDiv").click();
+</script>(“#ajaxDiv”).waitUntil().is(“:not”).visible();<p></p>
+
+<p>// Or, fluently: <br>
+$(“#ajaxDiv”).click().waitUntil().is(“:not”).visible(); <br>
+““`</p></div>
