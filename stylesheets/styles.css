@@ -1,12 +1,12 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+/* @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700); */
 html {
   background: #6C7989;
-  background: #6c7989 -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c7989), color-stop(100%, #434b55)) fixed;
+/*  background: #6c7989 -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c7989), color-stop(100%, #434b55)) fixed;
   background: #6c7989 -webkit-linear-gradient(#6c7989, #434b55) fixed;
   background: #6c7989 -moz-linear-gradient(#6c7989, #434b55) fixed;
   background: #6c7989 -o-linear-gradient(#6c7989, #434b55) fixed;
   background: #6c7989 -ms-linear-gradient(#6c7989, #434b55) fixed;
-  background: #6c7989 linear-gradient(#6c7989, #434b55) fixed;
+  background: #6c7989 linear-gradient(#6c7989, #434b55) fixed; */
 }
 
 body {
@@ -57,22 +57,8 @@ header {
   -ms-border-radius: 8px 8px 0 0;
   -o-border-radius: 8px 8px 0 0;
   border-radius: 8px 8px 0 0;
-  /*
-  background: #C6EAFA;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ddfbfc), color-stop(100%, #c6eafa));
-  background: -webkit-linear-gradient(#ddfbfc, #c6eafa);
-  background: -moz-linear-gradient(#ddfbfc, #c6eafa);
-  background: -o-linear-gradient(#ddfbfc, #c6eafa);
-  background: -ms-linear-gradient(#ddfbfc, #c6eafa);
-  background: linear-gradient(#ddfbfc, #c6eafa);
-  */
-  background: #111D72;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #111D72), color-stop(100%, #226583));
-  background: -webkit-linear-gradient(#111D72, #226583);
-  background: -moz-linear-gradient(#111D72, #226583);
-  background: -o-linear-gradient(#111D72, #226583);
-  background: -ms-linear-gradient(#111D72, #226583);
-  background: linear-gradient(#111D72, #226583);
+
+  background: #0769AD;
   
   position: relative;
   padding: 15px 20px;
@@ -118,12 +104,6 @@ header ul {
   height: 38px;
   padding: 1px 0;
   background: #5198DF;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #77b9fb), color-stop(100%, #3782cd));
-  background: -webkit-linear-gradient(#77b9fb, #3782cd);
-  background: -moz-linear-gradient(#77b9fb, #3782cd);
-  background: -o-linear-gradient(#77b9fb, #3782cd);
-  background: -ms-linear-gradient(#77b9fb, #3782cd);
-  background: linear-gradient(#77b9fb, #3782cd);
   border-radius: 5px;
   -webkit-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
   -moz-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
@@ -188,14 +168,6 @@ section {
   padding: 15px 20px;
   font-size: 15px;
   border-top: 1px solid #fff;
-  /*
-  background: -webkit-gradient(linear, 50% 0%, 50% 700, color-stop(0%, #fafafa), color-stop(100%, #dedede));
-  background: -webkit-linear-gradient(#fafafa, #dedede 700px);
-  background: -moz-linear-gradient(#fafafa, #dedede 700px);
-  background: -o-linear-gradient(#fafafa, #dedede 700px);
-  background: -ms-linear-gradient(#fafafa, #dedede 700px);
-  background: linear-gradient(#fafafa, #dedede 700px);
-  */
   background: #fafafa;
   -webkit-border-radius: 0 0 8px 8px;
   -moz-border-radius: 0 0 8px 8px;
@@ -360,10 +332,5 @@ footer p + p {
 
   header p {
     width: 100%;
-  }
-}
-@media print {
-  header p.view a small:before {
-    content: 'at http://github.com/';
   }
 }
