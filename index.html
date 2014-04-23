@@ -102,11 +102,12 @@ $</span><span class="pun">(</span><span class="str">"input.street"</span><span c
         </span><span class="tag">&lt;version&gt;</span><span class="pln">1.0.0-SNAPSHOT</span><span class="tag">&lt;/version&gt;</span><span class="pln">
     </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
 </span><span class="tag">&lt;/dependencies&gt;</span><span class="pln">
-</span><span class="com">&lt;!-- The repository URL, so maven can download it directly --&gt;</span><span class="pln">
+</span><span class="com">&lt;!-- The repository the snapshots will be downloaded from. Can either go in your pom.xml or settings.xml --&gt;</span><span class="pln">
 </span><span class="tag">&lt;repositories&gt;</span><span class="pln">
     </span><span class="tag">&lt;repository&gt;</span><span class="pln">
-        </span><span class="tag">&lt;id&gt;</span><span class="pln">Repo for seleniumQuery</span><span class="tag">&lt;/id&gt;</span><span class="pln">
-        </span><span class="tag">&lt;url&gt;</span><span class="pln">https://raw.githubusercontent.com/seleniumquery/snapshots-repository/master</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+        </span><span class="tag">&lt;id&gt;</span><span class="pln">sonatype-nexus-snapshots</span><span class="tag">&lt;/id&gt;</span><span class="pln">
+		</span><span class="tag">&lt;name&gt;</span><span class="pln">Sonatype Nexus Snapshots</span><span class="tag">&lt;/name&gt;</span><span class="pln">
+        </span><span class="tag">&lt;url&gt;</span><span class="pln">https://oss.sonatype.org/content/repositories/snapshots/</span><span class="tag">&lt;/url&gt;</span><span class="pln">
 		</span><span class="tag">&lt;snapshots&gt;</span><span class="pln">
 			</span><span class="tag">&lt;enabled&gt;</span><span class="pln">true</span><span class="tag">&lt;/enabled&gt;</span><span class="pln">
 			</span><span class="tag">&lt;updatePolicy&gt;</span><span class="pln">always</span><span class="tag">&lt;/updatePolicy&gt;</span><span class="pln">
