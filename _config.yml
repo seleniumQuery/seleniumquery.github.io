@@ -10,6 +10,8 @@ timezone: America/Sao_Paulo
 markdown: kramdown
 permalink: /:title.html
 
+kramdown:
+  input: GFM
 
 title: acdcjunior's
 description: descriz
