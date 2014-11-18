@@ -86,4 +86,4 @@ To get seleniumQuery's latest snapshot, add this to your **`pom.xml`**:
 </repositories>
 ```
 
-Find more on [seleniumQuery's github repository](https://github.com/seleniumQuery/seleniumQuery).
+Find more on [`seleniumQuery's github repository`](https://github.com/seleniumQuery/seleniumQuery).
