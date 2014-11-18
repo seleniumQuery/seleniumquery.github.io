@@ -17,7 +17,7 @@ Allows querying elements by:
 
 - **CSS Selectors** - `$(".myClass")`,
 - **jQuery/Sizzle enhancements** - `$(".myClass:eq(3)")`, `$(".myClass:contains('My Text!')")`
-- **XPath** - `$("//div/*/label")`
+- **XPath** - `$("//div/*/label/preceding::*")`
 - and even some own **seleniumQuery selectors**: `$("#myOldDiv").is(":not(:present)")`.
 
 Built using Selenium WebDriver's native capabilities **only**:
