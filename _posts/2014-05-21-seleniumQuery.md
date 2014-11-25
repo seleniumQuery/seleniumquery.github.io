@@ -64,6 +64,7 @@ public class SeleniumQueryExample {
 The code above can be found at the sample [seleniumQuery demos project](https://github.com/seleniumQuery/seleniumQuery-demos).
 
 To get seleniumQuery's latest snapshot, add this to your **`pom.xml`**:
+
 ```xml
 <!-- The project dependency -->
 <dependencies>
