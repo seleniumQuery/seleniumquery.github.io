@@ -55,7 +55,9 @@ public class SeleniumQueryExample {
   }
 }
 ```
+
 The code above can be found at the [seleniumQuery demos project](https://github.com/seleniumQuery/seleniumQuery-demos). To get the latest version, add to your **`pom.xml`**:
+
 ```xml
 <dependency>
     <groupId>io.github.seleniumquery</groupId>
