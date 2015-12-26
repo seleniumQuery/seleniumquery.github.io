@@ -1,5 +1,5 @@
-#[seleniumQuery](http://seleniumquery.github.io)
-###*Cross-Driver* jQuery-like Java interface for Selenium WebDriver
+# [seleniumQuery](http://seleniumquery.github.io)
+### *Cross-Driver* jQuery-like Java interface for Selenium WebDriver
 
 seleniumQuery is a Java library/framework that brings a ***cross-driver*** **jQuery-like** interface for [Selenium WebDriver](http://docs.seleniumhq.org/projects/webdriver/).
 
@@ -23,7 +23,7 @@ Built using Selenium WebDriver's native capabilities **only**:
 
 - No `jQuery.js` is embedded at the page, no side-effects are generated;
     - Doesn't matter if the page uses jQuery or not (or even if the JavaScript global variable `$` is other library like `Prototype.js`).
-- Capable of handling/testing **JavaScript-disabled pages**
+- Capable of handling/testing JavaScript-disabled pages
     - Test pages that use [Unobtrusive JavaScript](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript).
     - Most functions don't even require the browser/driver to have JavaScript enabled!
 
