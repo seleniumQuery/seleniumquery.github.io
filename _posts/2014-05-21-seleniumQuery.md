@@ -34,13 +34,15 @@ Try it out now with the running example below:
 {% gist 78cc1ce6be5214d91403 %}
 
 
-The code above can be found at the [seleniumQuery demos project](https://github.com/seleniumQuery/seleniumQuery-demos). To get the latest version, add to your **`pom.xml`**:
+Run this code easily: **download or clone the <kbd>[seleniumQuery showcase project](https://github.com/acdcjunior/seleniumQuery-showcase)</kbd> and execute the demo right now**.
+
+To get the latest version, add to your **`pom.xml`**:
 
 ```xml
 <dependency>
     <groupId>io.github.seleniumquery</groupId>
     <artifactId>seleniumquery</artifactId>
-    <version>0.9.0</version>
+    <version>0.10.0</version>
 </dependency>
 ```
 
