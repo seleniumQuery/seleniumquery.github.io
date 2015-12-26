@@ -36,9 +36,9 @@ Try it out now with the running example below:
 {% gist 78cc1ce6be5214d91403 %}
 
 
-## Download the **[seleniumQuery showcase project](https://github.com/acdcjunior/seleniumQuery-showcase)**
+## Download and execute the **[seleniumQuery showcase project](https://github.com/acdcjunior/seleniumQuery-showcase)**
 
-...and execute the demo right now.
+...and see seleniumQuery in action right now.
 
 To get the latest version, add to your **`pom.xml`**:
 
