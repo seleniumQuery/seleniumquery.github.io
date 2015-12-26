@@ -36,7 +36,7 @@ Try it out now with the running example below:
 {% gist 78cc1ce6be5214d91403 %}
 
 
-Run this code easily: **download or clone the <kbd>[seleniumQuery showcase project](https://github.com/acdcjunior/seleniumQuery-showcase)</kbd> and execute the demo right now**.
+Run this code easily: **download or clone the [seleniumQuery showcase project](https://github.com/acdcjunior/seleniumQuery-showcase) and execute the demo right now**.
 
 To get the latest version, add to your **`pom.xml`**:
 
