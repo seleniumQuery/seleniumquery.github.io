@@ -27,7 +27,8 @@ Built using Selenium WebDriver's native capabilities **only**:
     - Test pages that use [Unobtrusive JavaScript](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript).
     - Most functions don't even require the browser/driver to have JavaScript enabled!
 
-##Quickstart: A running example
+
+## Quickstart: A running example
 
 Try it out now with the running example below:
 
