@@ -80,4 +80,4 @@ To get the latest version, add to your **`pom.xml`**:
 </dependency>
 ```
 
-## Find more on [seleniumQuery's github repository](https://github.com/seleniumQuery/seleniumQuery).
+## Find all about it on [seleniumQuery's github repository](https://github.com/seleniumQuery/seleniumQuery).
